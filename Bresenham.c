@@ -1,47 +1,37 @@
-#include <graphics.h>
-#include <conio.h>
-#include <stdio.h>
-
-void Bresenham(int x1, int y1, int x2, int y2) {
-    int dx = abs(x2 - x1);
-    int dy = abs(y2 - y1);
-    int sx = (x1 < x2) ? 1 : -1;
-    int sy = (y1 < y2) ? 1 : -1;
-
-    int e2; // Removed err variable
-
-    while (x1 != x2 || y1 != y2) {
-        putpixel(x1, y1, WHITE);
-        e2 = 2 * (dx - dy); // Recalculating error based on dx and dy
-
-        if (e2 > -dy) {
-            dx -= dy;
-            x1 += sx;
-        }
-        
-        if (e2 < dx) {
-            dy += dx;
-            y1 += sy;
-        }
+#include<stdio.h>
+#include<conio.h>
+#include<graphics.h>
+#include<dos.h>
+void drawline(int x0, int y0,int x1,int y1)
+{
+int x,y,i,dx,dy,p;
+   dx=x1-x0;
+   dy=y1-y0;
+   x=x0;
+   y=y0;
+   p=2*dy-dx;
+   while (x<x1)
+   { if(p>=0)
+     { putpixel(x,y,GREEN);
+     y=y+1;
+     p=p+2*dy-2*dx;
+     }
+     else
+     { putpixel(x,y,GREEN);
+     p=p+2*dy;
+     }
+     x=x+1;
     }
-    
-    putpixel(x2, y2, WHITE);
-}
-
-int main() {
-    int gd = DETECT, gm;
-    int x1, y1, x2, y2;
-
-    initgraph(&gd, &gm, "C:\\TURBOC3\\BGI");
-
-    printf("Enter the coordinates of the first point (x1, y1): ");
-    scanf("%d %d", &x1, &y1);
-    printf("Enter the coordinates of the second point (x2, y2): ");
-    scanf("%d %d", &x2, &y2);
-
-    Bresenham(x1, y1, x2, y2);
-
-    getch();
-    closegraph();
-    return 0;
-}
+   }
+   int main()
+   { int gdriver = DETECT,gmode,x0,y0,x1,y1;
+   clrscr();
+   initgraph(&gdriver,&gmode,"C:\\Turboc3\\BGI");
+  printf("Enter co-ordinate of first point: ");
+   scanf("%d\n%d",&x0,&y0);
+ printf("Enter co-ordinates of second point: ");
+   scanf("%d\n%d",&x1,&y1);
+ drawline(x0,y0,x1,y1);
+ getch();
+   return 0;
+   }
